@@ -47,8 +47,8 @@ app.set('view engine', 'hbs');
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  //callbackURL: `https://chatapp-519h0247.herokuapp.com/auth/google/callback`,
-  callbackURL: `http://localhost:${PORT}/auth/google/callback`,
+  callbackURL: `https://chatapp-519h0247.herokuapp.com/auth/google/callback`,
+  //: `http://localhost:${PORT}/auth/google/callback`,
   passReqToCallback: true
 },
 function(request,accessToken, refreshToken, profile,cb) {

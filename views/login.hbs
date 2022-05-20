@@ -9,6 +9,9 @@
   <meta charset="UTF-8">
   <title>Login</title>
   <style>
+    html{
+      height: 100%;
+    }
     p.item {
       padding: 16px;
       text-align: center;
@@ -31,18 +34,26 @@
       background-color: #2563c7;
       transition: 0.3s;
     }
+    .gradient-bg{
+      background-color: #21D4FD;
+      background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      backdrop-filter: blur(8px);
+    }
   </style>
 </head>
 
-<body class="bg-secondary">
+<body class="gradient-bg">
 
-  <h3 class="text-center my-5 text-light">User Login</h3>
+  <h3 class="text-center my-5 text-light">AppChat Login</h3>
 
   <!-- buộc toàn bộ dòng và cột phải bỏ trong class container -->
-  <div class="container">
-    <div class="row justify-content-center">
+  <div class="container" >
+    <div class="row justify-content-center" >
       <div class="col-md-10 col-lg-8 col-xl-5">
-        <div class="border p-3 rounded bg-light shadow">
+        <div class="border p-3 rounded bg-light shadow" >
           
           <form>
             <div class="form-group">

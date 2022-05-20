@@ -18,20 +18,34 @@
       * {
   box-sizing: border-box;
 }
+html{
+  width: 100%;
+  height: 100%;
+}
+    .gradient-bg{
+      background-color: #21D4FD;
+      background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      backdrop-filter: blur(8px);
+      width: 100%;
+    }
 
 .user {
   display: flex;
   align-items: center;
   padding: 12px 24px;
   cursor: pointer;
+  background-color: #fefefd;
 }
 
 .user:nth-child(odd) {
-  background-color: #F4F5F7;
+  background-color: #e6e5e4;
 }
 
 .user:hover {
-  background-color: #E6EFFF;
+  background-color: #fdfaaf!important;
   transition: 0.3s;
 }
 
@@ -84,7 +98,7 @@
 }
 
 .conversation {
-  background-color: rgb(175, 175, 175);
+  background-color: rgb(233, 233, 233);
   padding: 24px;
   height: 75vh;
   overflow: auto;
@@ -224,7 +238,7 @@
     <div class="row justify-content-center">
       <div class="col-md-4">
         <div class="rounded border mt-3 mb-3">
-          <h4 class="text-primary text-center my-5">Danh sách người dùng trực tuyến</h4>
+          <h4 class="text-light text-center my-5">Danh sách người dùng trực tuyến</h4>
           <p style="padding: 0 24px">Số người online: <strong id="user-count" class="badge badge-danger badge-pill">0</strong><i class="fa-solid fa-user-group px-2" style="color: #222;"></i></p>
           <div id="user-list" class="people">
             {{!-- <div class="user">
@@ -304,8 +318,9 @@
             </div>
           </div>
           <div id="conversation" class="conversation">
-              <div class="d-flex content-justify-center">
-                 <span>Select a conversation to chat</span>
+              <div class="d-flex content-justify-center flex-column" style="height: 100%;width: 100%">
+                <div style="flex-grow: 1"><img style="display:block;margin:auto;" src="/images/empty_message.png"></div>
+                <h4 style="text-align:center">Please select a conversation</h4>
               </div>
 
           </div>

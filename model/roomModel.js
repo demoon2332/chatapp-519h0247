@@ -3,10 +3,13 @@ const Schema = mongoose.Schema
 
 const RoomSchema = new Schema({
     title: String,
-    sender: String,
-    receiver: String,
     createdAt: String,
-    lastMessage: String
+    lastMessage: String,
+    userList :[
+        {
+            user: String,
+        }
+    ]
 })
 
 //sender : email of sender

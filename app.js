@@ -146,7 +146,6 @@ io.on('connection',client=>{
     let chats = TextMessage.find({sender: {$in :[sender,receiver]},receiver: {$in :[sender,receiver]}}).limit(50).sort({createdAt: 1})
     .then(messages=>{
       console.log("request message")
-      console.log(messages)
       client.emit('list-messages',messages)
       })
   })
@@ -158,16 +157,32 @@ io.on('connection',client=>{
     io.to(receiver_id).emit('typing')
   })
 
+
   client.on('send-message',(mess)=>{
     console.log("Mess in server")
-    console.log(mess)
 
     // store to mongoDB
-    TextMessage({content: mess.message,sender: mess.sender_email,receiver: mess.receiver_email,
-    createdAt: new Date().toLocaleTimeString()}).save();
-
-
-    io.to(mess.receiver_id).emit('send-message',{message: mess.message,sender: mess.sender_email,createdAt: new Date().toLocaleTimeString()})
+    if(mess.type=="file"){
+      if( mess.receiver_email != null && mess.receiver_email != "")
+        {
+          TextMessage({content: mess.message,sender: mess.sender_email,receiver: mess.receiver_email,
+            createdAt: new Date().toLocaleTimeString(),type: "file",file: mess.file}).save();
+      
+            io.to(mess.receiver_id).emit('send-message',{message: mess.message,sender: mess.sender_email,
+              createdAt: new Date().toLocaleTimeString(),type: "file",file: mess.file})
+        }
+    }
+    else{
+      if( mess.receiver_email != null && mess.receiver_email != "")
+        {
+          TextMessage({content: mess.message,sender: mess.sender_email,receiver: mess.receiver_email,
+            createdAt: new Date().toLocaleTimeString()}).save();
+      
+      
+            io.to(mess.receiver_id).emit('send-message',{message: mess.message,sender: mess.sender_email,
+              createdAt: new Date().toLocaleTimeString(),type: "text"})
+        }
+    }
   })
 
 

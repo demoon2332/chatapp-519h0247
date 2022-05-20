@@ -10,7 +10,7 @@
   <title>Danh sách người dùng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css    ">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css    ">
   <link rel="stylesheet" href="../public/stylesheets/style.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -141,22 +141,31 @@
   font-size: 0.8rem;
   color: rgb(102, 102, 102);
 }
+.message img{
+  object-fit: scale-down;
+  width: 20vw;
+  height: 20vh;;
+}
 
 .message-input {
   border-top: 1px solid rgb(190, 190, 190);
   display: flex;
   position: relative;
+
+  height: vh*0.1;
 }
 #typing {
     background-color: rgb(242, 251, 255);
     border-radius: 4px;
     padding: 4px 8px;
     width: fit-content;
-    font-size: 0.7em;
+    font-size: 0.8em;
     position: absolute;
     top: -25px;
     left: 2px;
 }
+
+
 
 .message-input input[type="text"] {
     flex-grow: 1;
@@ -170,15 +179,22 @@
   transition: 0.3s;
 } 
 
-.message-input a{
+{{!-- .message-input a{
   text-decoration: none;
   padding: 8px;
   margin: 8px;
+  display: inline;
 }
+
 .message-input a:hover{
   background-color: rgb(215, 229, 255);
   border-radius: 4px;
   cursor: pointer;
+} --}}
+
+.message-input button:hover{
+  cursor: pointer;
+  opacity: 0.5;
 }
 
 .user .actions {
@@ -201,8 +217,8 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="row d-flex flex-row-reverse p-2" >
+  <div class="container py-3">
+    <div class="row d-flex flex-row-reverse p-1" >
        <a class="btn btn-danger" href="/logout">Đăng xuất | {{username}}</a>
     </div>
     <div class="row d-flex flex-row-reverse p-1">
@@ -212,7 +228,7 @@
       <div class="col-md-4">
         <div class="rounded border mt-3 mb-3">
           <h4 class="text-primary text-center my-5">Danh sách người dùng trực tuyến</h4>
-          <p style="padding: 0 24px">Số người online: <strong id="user-count" class="badge badge-danger badge-pill">0</strong></p>
+          <p style="padding: 0 24px">Số người online: <strong id="user-count" class="badge badge-danger badge-pill">0</strong><i class="fa-solid fa-user-group px-2" style="color: #222;"></i></p>
           <div id="user-list" class="people">
             {{!-- <div class="user">
               <div class="avatar">C</div>
@@ -277,9 +293,9 @@
         <p class="small">Để cho đơn giản, trang web chỉ cần hỗ trợ với mỗi người vào một thời điểm, không thể chat với người có trạng thái là <strong>đang bận</strong>.</p>
       </div>
       <div class="col-md-8">
-        <div class="rounded border mt-3 mb-3">
+        <div class="rounded border shadow mt-3 mb-3">
           <div class="user">
-            <div class="avatar">C</div>
+            <div class="avatar m-avatar">#</div>
             <div class="user-info">
               <div id="chat-username" class="user-name">Select a conversation</div>
               <div class="online">Vừa mới truy cập</div>
@@ -294,54 +310,30 @@
               <div class="d-flex content-justify-center">
                  <span>Select a conversation to chat</span>
               </div>
-              {{!-- <div class="message my-message">Ra quân chiến dịch Xuân tình nguyện năm 2021
-                <span class="time">08:59</span>
-              </div>
-              <div class="message my-message">Sáng ngày 28/01/2021, Hội sinh viên Trường Đại học Tôn Đức Thắng (TDTU) đã tổ chức lễ ra quân chiến dịch Xuân tình nguyện TDTU năm 2021.
-                <span class="time">08:59</span>
-              </div>
-              <div class="img-message my-message">
-                <img src="https://tdtu.edu.vn/sites/www/files/articles/2021/Jan/Xuan-tinh-nguyen/xuan_tinh_nguyen_2.jpg">
-              </div>
-              <div class="message their-message">OK! Rất rốt
-                <span class="time">08:59</span>
-              </div>
-              <div class="message their-message">Mình cũng sẽ đăng ký tham gia
-                <span class="time">08:59</span>
-              </div>
-              <div class="message their-message">Theo kế hoạch, chiến dịch diễn ra từ ngày 28/01 đến ngày 06/02/2021, huy động khoảng 1.250 chiến sĩ với 2 mặt trận cấp trường và cấp cơ sở.
-                <span class="time">08:59</span>
-              </div>
-              <div class="message my-message">Đây là hoạt động truyền thống của Hội sinh viên TDTU trong suốt 13 năm qua.
-                <span class="time">08:59</span>
-              </div>
-              <div class="message my-message">Chúc mọi người năm mới vui vẻ
-                <span class="time">08:59</span>
-              </div>
-              <div class="message their-message">Cám ơn mọi người
-                <span class="time">08:59</span>
-              </div>
-              <div class="message their-message">Mình cũng chúc mọi người năm mới phát tài
-                <span class="time">08:59</span>
-              </div>
-              <div class="img-message their-message">
-                <img src="https://media.truyenhinhdulich.vn/upload/news/2300_binh_phuoc_khai_mac_duong_hoa_xuan_tet_ky_hoi.jpg">
-              </div> --}}
+
           </div>
-          <div class="message-input">
-            <div id="typing" style="opacity: 0;">Unknown đang soạn tin...</div>
-            <input id="message-input" type="text" placeholder="Nhập tin nhắn" onkeypress="notifyTyping(event)">
-            <a href="#" onclick="sendMessageBtn(event)">Gửi</a>
-          </div>
+            <div class="message-input border-primary" >
+              <div id="typing" style="opacity: 0;">Unknown đang soạn tin...</div>
+                <input id="message-input" type="text" placeholder="Nhập tin nhắn" onkeypress="notifyTyping(event)">       
+            <div >
+                <input id="image-input" type="file" onChange="sendImageBtn(event)" accept="image/*" hidden>
+                <button class="btn btn-secondary px-3"><label for="image-input"><i class="fa-solid fa-image" style="cursor: pointer;"></i></label></button>
+            </div>    
+            <button class="btn btn-primary px-3" onclick="sendMessageBtn(event)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+
+          
+
         </div>
      
       </div>
     </div>
 
-    <div id="online-notification" class="alert alert-success d-inline position-fixed small" style="bottom: 20px; left: 20px;opacity: 0">
+    <div id="online-notification" class="alert alert-success d-none position-fixed small" style="bottom: 20px; left: 20px;opacity: 0">
       <strong>Trần Quang Trí</strong> vừa mới online
     </div>
-    <div id="offline-notification" class="alert alert-danger d-inline position-fixed small" style="bottom: 20px; right: 20px;opacity: 0">
+    <div id="offline-notification" class="alert alert-danger d-none position-fixed small" style="bottom: 20px; right: 20px;opacity: 1;">
       <strong>Trần Quang Trí</strong> đã thoát khỏi ứng dụng
     </div>
 
@@ -364,6 +356,7 @@
     //update informtion of chat screen:
     $('#chat-username').html(username)
     $('#typing').html(username+" đang soạn tin")
+    document.querySelector('.m-avatar').innerHTML = username[0].toUpperCase()
 
 
     current_receiver.email = receiver_email
@@ -373,6 +366,11 @@
   }
 
   window.onload = () =>{
+
+    // auto scroll to bottom of page:
+    window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+
+
     socket = io();
     socket.on('connect',handleConnectionSuccess)
     socket.on('list-users',handleUserList)
@@ -383,6 +381,20 @@
     socket.on('list-messages',handleRetrieveMessage)
     socket.on('typing',handleTyping)
     socket.on('send-message',handleGetMessage)
+    socket.on('image',handleImage)
+  }
+
+  function handleImage(buffer){
+      base64 = toBase64(buffer)
+
+          let messDiv = $(`
+          <div class="message my-message">
+            <div class="d-flex flex-column ">
+              <img src="data:image/png;base64,${base64}">
+            </div>
+          </div>
+    `)
+    $('#conversation').append(messDiv)
   }
 
   function handleRegister(data){
@@ -451,6 +463,7 @@
     console.log("messages")
     console.log(messages)
 
+
     $('#conversation').html('')
 
     messages.forEach(message=>{
@@ -459,23 +472,52 @@
       let messClass = "message their-message"
       if(message.sender == email)
         messClass = "message my-message"
-      let messDiv = $(`
-        <div class="${messClass}">${message.content}
-          <span class="time">${message.createdAt}</span>
-        </div>
-      `)
+
+       let messDiv = $(`
+          <div class="${messClass}">${message.content}
+            <span class="time">${message.createdAt}</span>
+          </div>
+        `)
+
+      if(message.type == 'file'){
+        console.log("Message type file")
+        console.log(message.file.data)
+        let base64 = toBase64(message.file.data)
+         messDiv = $(`
+          <div class="${messClass}">
+            <div class="d-flex flex-column ">
+              <img src="data:image/png;base64,${base64}">
+              <div class="time">${message.createdAt}</div>
+              <div class="time">${message.content}</div>
+            </div>
+          </div>
+        `)
+      }
       console.log(messDiv)
       $('#conversation').append(messDiv)
     })
   }
 
   function handleGetMessage(message){
-    
     let messDiv = $(`
           <div class="message their-message">${message.message}
             <span class="time">${message.createdAt}</span>
           </div>
     `)
+    if(message.type == 'file')
+    {
+        let base64 = toBase64(message.file)
+        messDiv = $(`
+        <div class="message their-message">
+          <div class="d-flex flex-column ">
+            <img src="data:image/png;base64,${base64}">
+            <div class="time">${message.createdAt}</div>
+            <div class="time">${message.message}</div>
+          </div>
+        </div>
+      `)
+    }
+
     $('#conversation').append(messDiv)
   }
 
@@ -510,6 +552,8 @@
 
   function sendMessage(message){
     let createdAt  = new Date().toLocaleDateString()
+
+
     let messDiv = $(`
           <div class="message my-message">${message}
             <span class="time">${createdAt}</span>
@@ -517,23 +561,27 @@
     `)
     $('#conversation').append(messDiv)
 
-    mess = {message: message,sender_email: email,receiver_email: current_receiver.email,receiver_id: current_receiver.id}
+    mess = {message: message,sender_email: email,receiver_email: current_receiver.email,receiver_id: current_receiver.id,type: "text"}
     socket.emit('send-message',mess)
   }
 
   function notifyOnline(username){
     $('#online-notification strong').html(username)
+    $('#online-notification').addClass('d-inline').removeClass('d-none')
     $('#online-notification').fadeTo(2000,1)
     setTimeout(()=>{
       $('#online-notification').fadeTo(2000,0)
+       $('#online-notification').addClass('d-none').removeClass('d-line')
     },4500)
   }
 
   function notifyOffline(username){
     $('#offline-notification strong').html(username)
+    $('#offline-notification').addClass('d-inline').removeClass('d-none')
     $('#offline-notification').fadeTo(2000,1)
         setTimeout(()=>{
       $('#offline-notification').fadeTo(2000,0)
+      $('#offline-notification').addClass('d-none').removeClass('d-inline')
     },4500)
   }
 
@@ -561,5 +609,49 @@
         input.value = ""
       }
   }
+
+  function sendImageBtn(e){
+    console.log("onChange")
+    console.log(e)
+    var file = e.target.files[0]
+    console.log(file)
+    console.log(file.data)
+
+    const reader = new FileReader();
+    reader.onload = function(){
+      mess = {message: file.name,sender_email: email,receiver_email: current_receiver.email,receiver_id: current_receiver.id,type: "file",file: this.result}
+      console.log(mess)
+      socket.emit('send-message',mess)
+    }
+    reader.readAsArrayBuffer(file)
+    console.log(reader)
+    
+
+    let createdAt  = new Date().toLocaleDateString()
+    var src = URL.createObjectURL(file);
+    let messDiv = $(`
+          <div class="message my-message">
+            <div class="d-flex flex-column ">
+              <img src="${src}">
+              <div class="time">${createdAt}</div>
+              <div class="time">${file.name}</div>
+            </div>
+          </div>
+    `)
+    $('#conversation').append(messDiv)
+
+    
+  }
+
+  function toBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+}
+
 </script>
 </html>

@@ -5,7 +5,10 @@ const TextMessageSchema = new Schema({
     content: String,
     sender: String,
     receiver: String,
-    createdAt: String
+    createdAt: String,
+    type: String,
+    file_name: String,
+    file: Buffer
 })
 
 

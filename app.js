@@ -34,7 +34,14 @@ passport.deserializeUser(function (user,done) {
  })
 
 // view engine setup
+
+var handlebars = require("express-handlebars").create({
+  defaultLayout: 'main',
+  extname: '.hbs'
+})
+
 app.set('views', path.join(__dirname, 'views'));
+app.engine('hbs',handlebars.engine)
 app.set('view engine', 'hbs');
 
 passport.use(new GoogleStrategy({

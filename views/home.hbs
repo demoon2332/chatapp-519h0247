@@ -13,16 +13,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css    ">
   <link rel="stylesheet" href="../public/stylesheets/style.css">
 
-  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+    integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+    crossorigin="anonymous"></script>
   <style>
-      * {
-  box-sizing: border-box;
-}
-html{
-  width: 100%;
-  height: 100%;
-}
-    .gradient-bg{
+    * {
+      box-sizing: border-box;
+    }
+    html {
+      width: 100%;
+      height: 100%;
+    }
+    .gradient-bg {
       background-color: #21D4FD;
       background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
       background-size: auto 100%;
@@ -31,277 +33,223 @@ html{
       backdrop-filter: blur(8px);
       width: 100%;
     }
+    .user {
+      display: flex;
+      align-items: center;
+      padding: 12px 24px;
+      cursor: pointer;
+      background-color: #fefefd;
+    }
+    .user:nth-child(odd) {
+      background-color: #e6e5e4;
+    }
+    .user:hover {
+      background-color: #fdfaaf !important;
+      transition: 0.3s;
+    }
+    .avatar {
+      font-weight: bold;
+      font-size: 1.5rem;
+      background-color: deepskyblue;
+      width: 50px;
+      height: 50px;
+      margin-right: 16px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white
+    }
 
-.user {
-  display: flex;
-  align-items: center;
-  padding: 12px 24px;
-  cursor: pointer;
-  background-color: #fefefd;
-}
+    .avatarMess {
+      font-weight: bold;
+      font-size: 1rem;
+      background-color: rgb(158, 79, 243);
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white
+    }
 
-.user:nth-child(odd) {
-  background-color: #e6e5e4;
-}
-
-.user:hover {
-  background-color: #fdfaaf!important;
-  transition: 0.3s;
-}
-
-.avatar {
-  font-weight: bold;
-  font-size: 1.5rem;
-  background-color: deepskyblue;
-  width: 50px;
-  height: 50px;
-  margin-right: 16px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white
-}
-
-.user-info {
-  height: 50px;
-  flex-grow: 1;
-}
-
-.user-name {
-  font-size: 1.1rem;
-
-}
-
-.user-info .online {
-  font-size: 0.9rem;
-  color: rgb(99, 99, 99)
-}
-
-.user .status {
-  width: 90px;
-  text-align: center;
-}
-
-.user:hover {
-  background-color: #E6EFFF;
-}
-
-.user:hover .avatar {
-  background-color: rgb(7, 142, 204);
-  transition: 0.3s;
-}
-
-.user:hover .user-name {
-  font-weight: 450;
-  transition: 0.3s;
-}
-
-.conversation {
-  background-color: rgb(233, 233, 233);
-  padding: 24px;
-  height: 75vh;
-  overflow: auto;
-}
-
-.message {
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 12px;
-  width: max-content;
-  max-width: 60%;
-  font-size: 0.9rem;
-}
-
-.img-message {
-  border-radius: 8px;
-  margin-bottom: 12px;
-  width: max-content;
-  max-width: 50%;
-}
-.img-message img {
-  max-width: 100%;
-  border-radius: 12px;
-}
-.img-message img:hover {
-   opacity: 0.85;
-}
-
-.my-message {
-  border-radius: 12px;
-  background-color: #DBEAFE;
-}
-.my-message:hover {
-  background-color: #b4cbe9;
-  transition: 0.3s;
-}
-
-.their-message {
-  border-radius: 12px;
-  background-color: white;
-  margin-left: auto;
-  margin-right: 0;
-}
-.their-message:hover {
-  background-color: rgb(231, 231, 231);
-  transition: 0.3s;
-}
-.message .time {
-  margin-top: 2px;
-  display: block;
-  font-size: 0.8rem;
-  color: rgb(102, 102, 102);
-}
-.message img{
-  object-fit: scale-down;
-  width: 20vw;
-  height: 20vh;;
-}
-
-.message-input {
-  border-top: 1px solid rgb(190, 190, 190);
-  display: flex;
-  position: relative;
-
-  height: vh*0.1;
-}
-#typing {
-    background-color: rgb(242, 251, 255);
-    border-radius: 4px;
-    padding: 4px 8px;
-    width: fit-content;
-    font-size: 0.8em;
-    position: absolute;
-    top: -25px;
-    left: 2px;
-}
-
-
-
-.message-input input[type="text"] {
-    flex-grow: 1;
-    border: none;
-    padding: 8px 16px;
-}
-
-.message-input input[type="text"]:focus {
-  border: none;
-  outline: none;
-  transition: 0.3s;
-} 
-
-{{!-- .message-input a{
-  text-decoration: none;
-  padding: 8px;
-  margin: 8px;
-  display: inline;
-}
-
-.message-input a:hover{
-  background-color: rgb(215, 229, 255);
-  border-radius: 4px;
-  cursor: pointer;
-} --}}
-
-.message-input button:hover{
-  cursor: pointer;
-  opacity: 0.5;
-}
-
-.user .actions {
-   color:rgb(161, 161, 161);
-   font-size: 1.2rem;
-}
-.user .actions i {
-   display: inline-block;
-    border-radius: 8px;
-   padding: 12px;
-}
-.user .actions i:hover {
-   display: inline-block;
-   color:rgb(128, 128, 128);
-   background-color: rgb(215, 229, 255);
-   transition: 0.3s;
-}
-
+    .user-info {
+      height: 50px;
+      flex-grow: 1;
+    }
+    .user-name {
+      font-size: 1.1rem;
+    }
+    .user-info .online {
+      font-size: 0.9rem;
+      color: rgb(99, 99, 99)
+    }
+    .user .status {
+      width: 90px;
+      text-align: center;
+    }
+    .user:hover {
+      background-color: #E6EFFF;
+    }
+    .user:hover .avatar {
+      background-color: rgb(7, 142, 204);
+      transition: 0.3s;
+    }
+    .user:hover .user-name {
+      font-weight: 450;
+      transition: 0.3s;
+    }
+    .conversation {
+      background-color: rgb(233, 233, 233);
+      padding: 24px;
+      height: 75vh;
+      overflow: auto;
+    }
+    .message {
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      width: max-content;
+      max-width: 60%;
+      font-size: 0.9rem;
+    }
+    .img-message {
+      border-radius: 8px;
+      margin-bottom: 12px;
+      width: max-content;
+      max-width: 50%;
+    }
+    .img-message img {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+    .img-message img:hover {
+      opacity: 0.85;
+    }
+    .their-message {
+      border-radius: 12px;
+      background-color: #DBEAFE;
+    }
+    .their-message:hover {
+      background-color: #b4cbe9;
+      transition: 0.3s;
+    }
+    .my-message {
+      border-radius: 12px;
+      background-color: white;
+      margin-left: auto;
+      margin-right: 0;
+    }
+    .my-message:hover {
+      background-color: rgb(231, 231, 231);
+      transition: 0.3s;
+    }
+    .message .time {
+      margin-top: 2px;
+      display: block;
+      font-size: 0.8rem;
+      color: rgb(102, 102, 102);
+    }
+    .message img {
+      object-fit: scale-down;
+      width: 20vw;
+      height: 20vh;
+      ;
+    }
+    .message-input {
+      border-top: 1px solid rgb(190, 190, 190);
+      display: flex;
+      position: relative;
+      height: vh*0.1;
+    }
+    #typing {
+      background-color: rgb(242, 251, 255);
+      border-radius: 4px;
+      padding: 4px 8px;
+      width: fit-content;
+      font-size: 0.8em;
+      position: absolute;
+      top: -25px;
+      left: 2px;
+    }
+    .message-input input[type="text"] {
+      flex-grow: 1;
+      border: none;
+      padding: 8px 16px;
+    }
+    .message-input input[type="text"]:focus {
+      border: none;
+      outline: none;
+      transition: 0.3s;
+    }
+      {
+        {
+         !-- .message-input a {
+          text-decoration: none;
+          padding: 8px;
+          margin: 8px;
+          display: inline;
+        }
+        .message-input a:hover {
+          background-color: rgb(215, 229, 255);
+          border-radius: 4px;
+          cursor: pointer;
+        }
+        --
+      }
+    }
+    .message-input button:hover {
+      cursor: pointer;
+      opacity: 0.5;
+    }
+    .user .actions {
+      color: rgb(161, 161, 161);
+      font-size: 1.2rem;
+    }
+    .user .actions i {
+      display: inline-block;
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .user .actions i:hover {
+      display: inline-block;
+      color: rgb(128, 128, 128);
+      background-color: rgb(215, 229, 255);
+      transition: 0.3s;
+    }
   </style>
 </head>
 
 <body>
   <div class="container py-3">
-    <div class="row d-flex flex-row-reverse p-1" >
-       <a class="btn btn-danger" href="/logout">Đăng xuất | {{username}}</a>
+    <div class="row d-flex flex-row-reverse p-1">
+      <a class="btn btn-danger" href="/logout">Đăng xuất | {{username}}</a>
     </div>
     <div class="row d-flex flex-row-reverse p-1">
-            <span>Login as {{email}}</span>
+      <span>Login as {{email}}</span>
     </div>
     <div class="row justify-content-center">
       <div class="col-md-4">
         <div class="rounded border mt-3 mb-3">
           <h4 class="text-light text-center my-5">Danh sách người dùng trực tuyến</h4>
-          <p style="padding: 0 24px">Số người online: <strong id="user-count" class="badge badge-danger badge-pill">0</strong><i class="fa-solid fa-user-group px-2" style="color: #222;"></i></p>
+          <p style="padding: 0 24px">Số người online: <strong id="user-count"
+              class="badge badge-danger badge-pill">0</strong><i class="fa-solid fa-user-group px-2"
+              style="color: #222;"></i></p>
           <div id="user-list" class="people">
-            {{!-- <div class="user">
-              <div class="avatar">C</div>
-              <div class="user-info">
-                <div class="user-name">Phạm Công Chánh</div>
-                <div class="online">Truy cập lúc: 16:45'</div>
-              </div>
-              <div class="status">
-                <div class="badge badge-success badge-pill">Đang rảnh</div>
-              </div>
-            </div>
-
-            <div class="user">
-              <div class="avatar">D</div>
-              <div class="user-info">
-                <div class="user-name">Vũ Đình Duy</div>
-                <div class="online">Truy cập : 16:45'</div>
-              </div>
-              <div class="status">
-                <div class="badge badge-success badge-pill">Đang rảnh</div>
-              </div>
-
-            </div>
-
-            <div class="user">
-              <div class="avatar">K</div>
-              <div class="user-info">
-                <div class="user-name">Trần Vũ Khoa</div>
-                <div class="online">Truy cập lúc: 16:45'</div>
-              </div>
-              <div class="status">
-                <div class="badge badge-warning badge-pill">Đang bận</div>
-              </div>
-            </div>
-
-            <div class="user">
-              <div class="avatar">P</div>
-              <div class="user-info">
-                <div class="user-name">Quách Phạm</div>
-                <div class="online">Truy cập lúc: 16:45'</div>
-              </div>
-              <div class="status">
-                <div class="badge badge-success badge-pill">Đang rảnh</div>
-              </div>
-            </div>
-
-            <div class="user">
-              <div class="avatar">K</div>
-              <div class="user-info">
-                <div class="user-name">Lê Duy Khang</div>
-                <div class="online">Truy cập lúc: 16:45'</div>
-              </div>
-              <div class="status">
-                <div class="badge badge-warning badge-pill">Đang bận</div>
-              </div>
-            </div> --}}
           </div>
         </div>
-        <p class="small">Danh sách này cần được cập nhật tự động mỗi khi có người dùng đăng nhập hoặc đăng xuất/thoát.
-          Ngoài ra trạng thái của mỗi người dùng cũng cần được cập nhật mỗi khi họ tham gia hoặc rời một cuộc trò
-          chuyện.</p>
-        <p class="small">Để cho đơn giản, trang web chỉ cần hỗ trợ với mỗi người vào một thời điểm, không thể chat với người có trạng thái là <strong>đang bận</strong>.</p>
+        <div class="rounded border mt-3 mb-2">
+          <h4 class="text-light text-center my-5">Danh sách các phòng chat </h4>
+          <div id="room-list" class="people">
+          </div>
+          <form id="room-form" class="message-input border-primary">
+            <input  placeholder="Nhập tên phòng mới" id="room-name-form" style="flex-grow: 1;">
+            <button type="submit" class="btn btn-primary px-3">Thêm</button>
+          </form>
+        </div>
+         
       </div>
       <div class="col-md-8">
         <div class="rounded border shadow mt-3 mb-3">
@@ -318,40 +266,43 @@ html{
             </div>
           </div>
           <div id="conversation" class="conversation">
-              <div class="d-flex content-justify-center flex-column" style="height: 100%;width: 100%">
-                <div style=""><img style="display:block;margin:auto;" src="/images/empty_message.png"></div>
-                <h4 style="text-align:center">Please select a conversation</h4>
-              </div>
-
-          </div>
-            <div class="message-input border-primary" >
-              <div id="typing" style="opacity: 0;">Unknown đang soạn tin...</div>
-                <input id="message-input" type="text" placeholder="Nhập tin nhắn" onkeypress="notifyTyping(event)">       
-            <div >
-                <input id="image-input" type="file" onChange="sendImageBtn(event)" accept="image/*" hidden>
-                <button class="btn btn-secondary px-3"><label for="image-input"><i class="fa-solid fa-image" style="cursor: pointer;"></i></label></button>
-            </div>    
-            <button class="btn btn-primary px-3" onclick="sendMessageBtn(event)"><i class="fas fa-chevron-right"></i></button>
+            <div class="d-flex content-justify-center flex-column" style="height: 100%;width: 100%">
+              <div style=""><img style="display:block;margin:auto;" src="/images/empty_message.png"></div>
+              <h4 style="text-align:center">Please select a conversation</h4>
             </div>
 
+          </div>
+          <div class="message-input border-primary">
+            <div id="typing" style="opacity: 0;">Unknown đang soạn tin...</div>
+            <input id="message-input" type="text" placeholder="Nhập tin nhắn" onkeypress="notifyTyping(event)">
+            <div>
+              <input id="image-input" type="file" onChange="sendImageBtn(event)" accept="image/*" hidden>
+              <button class="btn btn-secondary px-3"><label for="image-input"><i class="fa-solid fa-image"
+                    style="cursor: pointer;"></i></label></button>
+            </div>
+            <button class="btn btn-primary px-3" onclick="sendMessageBtn(event)"><i
+                class="fas fa-chevron-right"></i></button>
+          </div>
 
-          
+
+
 
         </div>
-     
+
       </div>
     </div>
 
-    <div id="online-notification" class="alert alert-success d-none position-fixed small" style="bottom: 20px; left: 20px;opacity: 0">
+    <div id="online-notification" class="alert alert-success d-none position-fixed small"
+      style="bottom: 20px; left: 20px;opacity: 0">
       <strong>Trần Quang Trí</strong> vừa mới online
     </div>
-    <div id="offline-notification" class="alert alert-danger d-none position-fixed small" style="bottom: 20px; right: 20px;opacity: 1;">
+    <div id="offline-notification" class="alert alert-danger d-none position-fixed small"
+      style="bottom: 20px; right: 20px;opacity: 1;">
       <strong>Trần Quang Trí</strong> đã thoát khỏi ứng dụng
     </div>
 
 </body>
 <script>
-
   const email = "{{{email}}}"
   let onlineUsers = []
   let username = "{{{username}}}"
@@ -360,46 +311,46 @@ html{
   console.log("Username")
   console.log(username)
   let socket
-
-  function requestMessages(e,receiver_email,receiver_id){
-    console.log("click oke")
-    console.log(email)
-
+  const roomForm = document.querySelector("#room-form");
+  const roomName = document.querySelector("#room-name-form");
+  function requestMessages(e, receiver_email,receiver_name , receiver_id) {
     //update informtion of chat screen:
-    $('#chat-username').html(username)
-    $('#typing').html(username+" đang soạn tin")
+    $('#chat-username').html(receiver_name)
+    $('#typing').html(username + " đang soạn tin")
     document.querySelector('.m-avatar').innerHTML = username[0].toUpperCase()
-
-
     current_receiver.email = receiver_email
     current_receiver.id = receiver_id
     console.log(current_receiver)
-    socket.emit('request-messages',email,receiver_email)
+    socket.emit('request-messages', email, receiver_email)
   }
-
-  window.onload = () =>{
-
+  function requestMessagesRoom(e, roomName) {
+    //update informtion of chat screen:
+    $('#chat-username').html(roomName)
+    $('#typing').html(username + " đang soạn tin")
+    document.querySelector('.m-avatar').innerHTML = username[0].toUpperCase()
+    current_receiver.email = roomName
+    current_receiver.id = roomName
+    socket.emit('request-messages-room', roomName)
+  }
+  window.onload = () => {
     // auto scroll to bottom of page:
     window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
-
-
     socket = io();
-    socket.on('connect',handleConnectionSuccess)
-    socket.on('list-users',handleUserList)
-    socket.on('disconnect', ()=> console.log('Client has been disconnect'))
-    socket.on('new-user',handleNewUser)
-    socket.on('user-leave',handleUserLeave)
-    socket.on('register-name',handleRegister)
-    socket.on('list-messages',handleRetrieveMessage)
-    socket.on('typing',handleTyping)
-    socket.on('send-message',handleGetMessage)
+    socket.on('connect', handleConnectionSuccess)
+    socket.on('list-users', handleUserList)
+    socket.on('list-rooms', handleRoomList)
+    socket.on('disconnect', () => console.log('Client has been disconnect'))
+    socket.on('new-user', handleNewUser)
+    socket.on('user-leave', handleUserLeave)
+    socket.on('register-name', handleRegister)
+    socket.on('list-messages', handleRetrieveMessage)
+    socket.on('typing', handleTyping)
+    socket.on('send-message', handleGetMessage)
     //socket.on('image',handleImage)
   }
-
-  function handleImage(buffer){
-      base64 = toBase64(buffer)
-
-          let messDiv = $(`
+  function handleImage(buffer) {
+    base64 = toBase64(buffer)
+    let messDiv = $(`
           <div class="message my-message">
             <div class="d-flex flex-column ">
               <img src="data:image/png;base64,${base64}">
@@ -408,100 +359,103 @@ html{
     `)
     $('#conversation').append(messDiv)
   }
-
-  function handleRegister(data){
-      let {id,username,email} = data
-      console.log()
-      let user = onlineUsers.find(u=> u.id == id)
-      if(!user){
-          return console.log("Can't not find the user with id: "+id)
-      }
-      user.username = username
-      user.email = email
-      displayUser(user)
-      console.log(`Client ${id} registered with username: ${username}`)
-      notifyOnline(username)
+  function handleRegister(data) {
+    let { id, username, email } = data
+    console.log()
+    let user = onlineUsers.find(u => u.id == id)
+    if (!user) {
+      return console.log("Can't not find the user with id: " + id)
+    }
+    user.username = username
+    user.email = email
+    displayUser(user)
+    console.log(`Client ${id} registered with username: ${username}`)
+    notifyOnline(username)
   }
-  
-  function handleConnectionSuccess(){
-      console.log('Client connects. '+socket.id);
-      console.log("Socket information")
-      console.log(socket)
-      username = sessionStorage.getItem('username_lunar') ? sessionStorage.getItem('username_lunar') : username
-      if(username){
-        console.log("Username tu sessionStorage la: "+username)
-      }
-      while(!username){
-          username = prompt('Enter your name')
-          sessionStorage.setItem('username_lunar',username)
-      }
-      socket.emit('register-name',username,email)
+  function handleConnectionSuccess() {
+    console.log('Client connects. ' + socket.id);
+    console.log("Socket information")
+    console.log(socket)
+    username = sessionStorage.getItem('username_lunar') ? sessionStorage.getItem('username_lunar') : username
+    if (username) {
+      console.log("Username tu sessionStorage la: " + username)
+    }
+    while (!username) {
+      username = prompt('Enter your name')
+      sessionStorage.setItem('username_lunar', username)
+    }
+    socket.emit('register-name', username, email)
   }
-
-  function handleUserList(users){
+  function handleUserList(users) {
     console.log('Received user list.')
     console.log("users")
     console.log(users)
-    users.forEach(u=>{
+    users.forEach(u => {
       console.log(u)
-      if(u.id !== socket.id){
+      if (u.id !== socket.id) {
         onlineUsers.push(u);
         displayUser(u)
       }
     })
   }
-
-  function handleNewUser(user){
+  function handleRoomList(rooms) {
+    rooms.forEach(r => {
+      displayRoom(r)
+    })
+  }
+  function handleNewUser(user) {
     console.log('New person is connecting.')
     console.log(user)
     onlineUsers.push(user)
   }
-
-  function handleUserLeave(id){
-    let user = onlineUsers.find(u=> u.id ==id)
+  function handleUserLeave(id) {
+    let user = onlineUsers.find(u => u.id == id)
     console.log(`User ${id} left, remain ${onlineUsers.length} users in the room.`)
     removeUser(id)
     notifyOffline(user.username)
   }
-
-  function handleTyping(){
-    $('#typing').fadeTo(800,1)
-    setTimeout(()=>{
-      $('#typing').fadeTo(800,0)
-    },4500)
+  function handleTyping() {
+    $('#typing').fadeTo(800, 1)
+    setTimeout(() => {
+      $('#typing').fadeTo(800, 0)
+    }, 4500)
   }
-
-  function handleRetrieveMessage(messages){
-    console.log("messages")
-    console.log(messages)
-
-
+  function handleRetrieveMessage(messages) {
     $('#conversation').html('')
-
-    messages.forEach(message=>{
+    messages.forEach(message => {
       console.log("message")
       console.log(message)
       let messClass = "message their-message"
-      if(message.sender == email)
-        messClass = "message my-message"
-
-       let messDiv = $(`
-          <div class="${messClass}">${message.content}
+      let avatarMess = `<div class="avatarMess">${message.sender[0].toUpperCase()}</div>`
+      if (message.sender == email)
+        {
+          messClass = "message my-message"
+          avatarMess = ""
+        }
+      let messDiv = $(`
+          <div class="d-flex -flex-column">
+          ${avatarMess}
+          <div class="${messClass}" data-toggle="tooltip" data-placement="top" title="${message.sender}">
+            ${message.content}
             <span class="time">${message.createdAt}</span>
           </div>
+            </div>
         `)
-
-      if(message.type == 'file'){
+      if (message.type == 'file') {
         console.log("Message type file")
         console.log(message.file.data)
         let base64 = toBase64(message.file.data)
-         messDiv = $(`
-          <div class="${messClass}">
+        messDiv = $(`
+        <div>
+          ${avatarMess}
+          <div class="${messClass}" data-toggle="tooltip" data-placement="top" title="${message.sender}">
+            
             <div class="d-flex flex-column ">
               <img src="data:image/png;base64,${base64}">
               <div class="time">${message.createdAt}</div>
               <div class="time">${message.content}</div>
             </div>
+          </div>
           </div>
         `)
       }
@@ -509,17 +463,15 @@ html{
       $('#conversation').append(messDiv)
     })
   }
-
-  function handleGetMessage(message){
+  function handleGetMessage(message) {
     let messDiv = $(`
           <div class="message their-message">${message.message}
             <span class="time">${message.createdAt}</span>
           </div>
     `)
-    if(message.type == 'file')
-    {
-        let base64 = toBase64(message.file)
-        messDiv = $(`
+    if (message.type == 'file') {
+      let base64 = toBase64(message.file)
+      messDiv = $(`
         <div class="message their-message">
           <div class="d-flex flex-column ">
             <img src="data:image/png;base64,${base64}">
@@ -529,22 +481,18 @@ html{
         </div>
       `)
     }
-
     $('#conversation').append(messDiv)
   }
-
-  function removeUser(id){
-      $(`#${id}`).remove();
-      $('#user-count').html($('#user-list .user').length)
+  function removeUser(id) {
+    $(`#${id}`).remove();
+    $('#user-count').html($('#user-list .user').length)
   }
-
-  function displayUser(user){
-      console.log("display user")
-      console.log(user)
-      
-      let status = user.free ? '<div class="badge badge-success badge-pill">Đang rãnh</div>' : '<div class="badge badge-warning badge-pill">Đang bận</div>'
-      let userDiv = $(`
-            <div id="${user.id}" class="user" onclick='requestMessages(event,"${user.email}",this.id)'>
+  function displayUser(user) {
+    console.log("display user")
+    console.log(user)
+    let status = user.free ? '<div class="badge badge-success badge-pill">Đang rảnh</div>' : '<div class="badge badge-warning badge-pill">Đang bận</div>'
+    let userDiv = $(`
+            <div id="${user.id}" class="user" onclick='requestMessages(event,"${user.email}","${user.username}",this.id)'>
               <div class="avatar">${user.username[0].toUpperCase()}</div>
               <div class="user-info">
                 <div class="user-name" style="overflow: hidden;
@@ -558,88 +506,86 @@ html{
               </div>
             </div>
       `)
-      $('#user-list').append(userDiv)
-      $('#user-count').html($('#user-list .user').length)
+    $('#user-list').append(userDiv)
+    $('#user-count').html($('#user-list .user').length)
   }
-
-  function sendMessage(message){
-    let createdAt  = new Date().toLocaleDateString()
-
-
+  function displayRoom(room) {
+    let roomDiv = $(`
+          <div id="${room.roomName}" class="user" onclick='requestMessagesRoom(event,"${room.roomName}",this.id)'>
+              <div class="avatar">${room.roomName[0]}</div>
+             <div class="user-info">
+                <div class="user-name" style="overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;">
+                    ${room.roomName}</div>
+              </div>
+            </div>
+      `)
+    $('#room-list').append(roomDiv)
+  }
+  function sendMessage(message) {
+    let createdAt = new Date().toLocaleDateString()
     let messDiv = $(`
           <div class="message my-message">${message}
             <span class="time">${createdAt}</span>
           </div>
     `)
     $('#conversation').append(messDiv)
-
-    mess = {message: message,sender_email: email,receiver_email: current_receiver.email,receiver_id: current_receiver.id,type: "text"}
-    socket.emit('send-message',mess)
+    mess = { message: message, sender_email: email, receiver_email: current_receiver.email, receiver_id: current_receiver.id, type: "text" }
+    socket.emit('send-message', mess)
   }
-
-  function notifyOnline(username){
+  function notifyOnline(username) {
     $('#online-notification strong').html(username)
     $('#online-notification').addClass('d-inline').removeClass('d-none')
-    $('#online-notification').fadeTo(2000,1)
-    setTimeout(()=>{
-      $('#online-notification').fadeTo(2000,0)
-       $('#online-notification').addClass('d-none').removeClass('d-line')
-    },4500)
+    $('#online-notification').fadeTo(2000, 1)
+    setTimeout(() => {
+      $('#online-notification').fadeTo(2000, 0)
+      $('#online-notification').addClass('d-none').removeClass('d-line')
+    }, 4500)
   }
-
-  function notifyOffline(username){
+  function notifyOffline(username) {
     $('#offline-notification strong').html(username)
     $('#offline-notification').addClass('d-inline').removeClass('d-none')
-    $('#offline-notification').fadeTo(2000,1)
-        setTimeout(()=>{
-      $('#offline-notification').fadeTo(2000,0)
+    $('#offline-notification').fadeTo(2000, 1)
+    setTimeout(() => {
+      $('#offline-notification').fadeTo(2000, 0)
       $('#offline-notification').addClass('d-none').removeClass('d-inline')
-    },4500)
+    }, 4500)
   }
-
-  function notifyTyping(e){
-
-    if(e.keyCode===13){
-      if(e.target.value.trim().length >0)
-        {
-          sendMessage(e.target.value)
-          e.target.value = ""
-        }
-    }
-    else{
-          console.log("typing...")
-          socket.emit('typing',current_receiver.id)
-    }
-
-  }
-
-  function sendMessageBtn(e){
-    let input = document.getElementById('message-input')
-    if(input.value.trim().length >0)
-      {
-        sendMessage(input.value)
-        input.value = ""
+  function notifyTyping(e) {
+    if (e.keyCode === 13) {
+      if (e.target.value.trim().length > 0) {
+        sendMessage(e.target.value)
+        e.target.value = ""
       }
+    }
+    else {
+      console.log("typing...")
+      socket.emit('typing', current_receiver.id)
+    }
   }
-
-  function sendImageBtn(e){
+  function sendMessageBtn(e) {
+    let input = document.getElementById('message-input')
+    if (input.value.trim().length > 0) {
+      sendMessage(input.value)
+      input.value = ""
+    }
+  }
+  function sendImageBtn(e) {
     console.log("onChange")
     console.log(e)
     var file = e.target.files[0]
     console.log(file)
     console.log(file.data)
-
     const reader = new FileReader();
-    reader.onload = function(){
-      mess = {message: file.name,sender_email: email,receiver_email: current_receiver.email,receiver_id: current_receiver.id,type: "file",file: this.result}
+    reader.onload = function () {
+      mess = { message: file.name, sender_email: email, receiver_email: current_receiver.email, receiver_id: current_receiver.id, type: "file", file: this.result }
       console.log(mess)
-      socket.emit('send-message',mess)
+      socket.emit('send-message', mess)
     }
     reader.readAsArrayBuffer(file)
     console.log(reader)
-    
-
-    let createdAt  = new Date().toLocaleDateString()
+    let createdAt = new Date().toLocaleDateString()
     var src = URL.createObjectURL(file);
     let messDiv = $(`
           <div class="message my-message">
@@ -651,19 +597,26 @@ html{
           </div>
     `)
     $('#conversation').append(messDiv)
-
-    
   }
-
-  function toBase64( buffer ) {
+  function toBase64(buffer) {
     var binary = '';
-    var bytes = new Uint8Array( buffer );
+    var bytes = new Uint8Array(buffer);
     var len = bytes.byteLength;
     for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode( bytes[ i ] );
+      binary += String.fromCharCode(bytes[i]);
     }
-    return window.btoa( binary );
-}
-
+    return window.btoa(binary);
+  }
+  function joinRoom(roomName) {
+    socket.emit('join-room', roomname);
+  }
+  roomForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let roomName1 = roomName.value;
+    if (roomName1.length > 0)
+      socket.emit('add-new-room', { name: roomName1,  host: email })
+    roomName.value = '';
+  })
 </script>
+
 </html>

@@ -12,7 +12,6 @@ const RoomSchema = new Schema({
     ]
 })
 
-//sender : email of sender
-// receiver: email of receiver
+
 
 module.exports = new mongoose.model('Room',RoomSchema);

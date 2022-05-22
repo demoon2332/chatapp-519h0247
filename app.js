@@ -7,6 +7,7 @@ const socketio = require('socket.io');
 var passport = require('passport')
 require('./db.js')
 const TextMessage = require('./model/textMessageModel')
+const Rooms = require('./model/roomModel')
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config()
@@ -26,12 +27,12 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-passport.serializeUser(function(user,done){
-  done(null,user)
+passport.serializeUser(function (user, done) {
+  done(null, user)
 })
-passport.deserializeUser(function (user,done) { 
-  done(null,user)
- })
+passport.deserializeUser(function (user, done) {
+  done(null, user)
+})
 
 // view engine setup
 
@@ -41,7 +42,7 @@ var handlebars = require("express-handlebars").create({
 })
 
 app.set('views', path.join(__dirname, 'views'));
-app.engine('hbs',handlebars.engine)
+app.engine('hbs', handlebars.engine)
 app.set('view engine', 'hbs');
 
 passport.use(new GoogleStrategy({
@@ -51,14 +52,14 @@ passport.use(new GoogleStrategy({
   callbackURL: `http://localhost:${PORT}/auth/google/callback`,
   passReqToCallback: true
 },
-function(request,accessToken, refreshToken, profile,cb) {
-  // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-  //   return cb(err, user);
-  // });
-  //console.log("profile ne")
-  //console.log(profile)
-  return cb(null,profile);
-}
+  function (request, accessToken, refreshToken, profile, cb) {
+    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    //   return cb(err, user);
+    // });
+    //console.log("profile ne")
+    //console.log(profile)
+    return cb(null, profile);
+  }
 ));
 
 
@@ -72,14 +73,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['email','profile'] }));
+  passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-app.get('/auth/google/callback', 
+app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
+  function (req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
-});
+  });
 
 
 
@@ -90,12 +91,12 @@ app.use('/users', usersRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.render('error')
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -106,10 +107,10 @@ app.use(function(err, req, res, next) {
 });
 
 
-const httpServer =  app.listen(PORT, ()=> console.log('http:\\localhost:'+PORT))
+const httpServer = app.listen(PORT, () => console.log('http:\\localhost:' + PORT))
 const io = socketio(httpServer)
 
-io.on('connection',client=>{
+io.on('connection', client => {
   console.log(`Client ${client.id} connected`)
 
   client.free = true;
@@ -117,83 +118,117 @@ io.on('connection',client=>{
 
 
   let users = Array.from(io.sockets.sockets.values())
-    .map(socket => ({id: socket.id,username: socket.username,email: socket.email,free: client.free,loginAt: client.loginAt}))
+    .map(socket => ({ id: socket.id, username: socket.username, email: socket.email, free: client.free, loginAt: client.loginAt }))
   console.log(users)
 
 
-  client.on('disconnect',()=> {
+  client.on('disconnect', () => {
     console.log(`${client.id} has disconnect.`)
-    client.broadcast.emit('user-leave',client.id)
+    client.broadcast.emit('user-leave', client.id)
   })
 
-  client.on('register-name',(username,email)=>{
+  client.on('register-name', (username, email) => {
     client.username = username
     client.email = email
 
-    
-    client.broadcast.emit('register-name',{id: client.id,username: client.username,email: client.email,free: client.free,loginAt: client.loginAt})
+
+    client.broadcast.emit('register-name', { id: client.id, username: client.username, email: client.email, free: client.free, loginAt: client.loginAt })
   })
 
 
   // send user list
-  client.emit('list-users',users)
+  client.emit('list-users', users)
   console.log("user list")
   console.log(users)
+
+  // send list room
+  Rooms.find({},function(err, result) {
+    console.log(result)
+    client.emit('list-rooms', result)
+  })
+  
+
+  // join room
+  client.on("join-room", function (roomName) {
+    client.join(roomName);
+    console.log(roomName)
+  });
+
+  //leave room
+  client.on("leave-room", function (roomName) {
+    client.leave(roomName);
+  });
 
   // send chat list
   // let sample = new TextMessage({content: 'test message',sender: 'ductrong@gmail.com',receiver: 'abc',
   // createdAt: new Date().toLocaleTimeString()}).save();
-  
-  client.on('request-messages',(sender,receiver)=>{
+
+  client.on('request-messages', (sender, receiver) => {
     console.log("r-sender")
     console.log(sender)
     console.log("r-receiver")
     console.log(receiver)
 
-    let chats = TextMessage.find({sender: {$in :[sender,receiver]},receiver: {$in :[sender,receiver]}}).limit(50).sort({createdAt: 1})
-    .then(messages=>{
-      console.log("request message")
-      client.emit('list-messages',messages)
+    let chats = TextMessage.find({ sender: { $in: [sender, receiver] }, receiver: { $in: [sender, receiver] } }).limit(50).sort({ createdAt: 1 })
+      .then(messages => {
+        console.log("request message")
+        client.emit('list-messages', messages)
       })
   })
 
-  client.on('typing',(receiver_id)=>{
+  client.on('request-messages-room', ( receiver) => {
+    let chats = TextMessage.find({ receiver: receiver}).limit(50).sort({ createdAt: 1 })
+      .then(messages => {
+        client.emit('list-messages', messages)
+      })
+  })
+
+  client.on('typing', (receiver_id) => {
     console.log("receiver")
     console.log(receiver_id)
 
     io.to(receiver_id).emit('typing')
   })
 
+  client.on('add-new-room', (data) => {
+    Rooms({
+      roomHost: data.host, roomName: data.name
+    }).save();
+  })
 
-  client.on('send-message',(mess)=>{
+  client.on('send-message', (mess) => {
     console.log("Mess in server")
 
     // store to mongoDB
-    if(mess.type=="file"){
-      if( mess.receiver_email != null && mess.receiver_email != "")
-        {
-          TextMessage({content: mess.message,sender: mess.sender_email,receiver: mess.receiver_email,
-            createdAt: new Date().toLocaleTimeString(),type: "file",file: mess.file}).save();
-      
-            io.to(mess.receiver_id).emit('send-message',{message: mess.message,sender: mess.sender_email,
-              createdAt: new Date().toLocaleTimeString(),type: "file",file: mess.file})
-        }
+    if (mess.type == "file") {
+      if (mess.receiver_email != null && mess.receiver_email != "") {
+        TextMessage({
+          content: mess.message, sender: mess.sender_email, receiver: mess.receiver_email,
+          createdAt: new Date().toLocaleTimeString(), type: "file", file: mess.file
+        }).save();
+
+        io.to(mess.receiver_id).emit('send-message', {
+          message: mess.message, sender: mess.sender_email,
+          createdAt: new Date().toLocaleTimeString(), type: "file", file: mess.file
+        })
+      }
     }
-    else{
-      if( mess.receiver_email != null && mess.receiver_email != "")
-        {
-          TextMessage({content: mess.message,sender: mess.sender_email,receiver: mess.receiver_email,
-            createdAt: new Date().toLocaleTimeString()}).save();
-      
-      
-            io.to(mess.receiver_id).emit('send-message',{message: mess.message,sender: mess.sender_email,
-              createdAt: new Date().toLocaleTimeString(),type: "text"})
-        }
+    else {
+      if (mess.receiver_email != null && mess.receiver_email != "") {
+        TextMessage({
+          content: mess.message, sender: mess.sender_email, receiver: mess.receiver_email,
+          createdAt: new Date().toLocaleTimeString()
+        }).save();
+
+
+        io.to(mess.receiver_id).emit('send-message', {
+          message: mess.message, sender: mess.sender_email,
+          createdAt: new Date().toLocaleTimeString(), type: "text"
+        })
+      }
     }
   })
-
-
-  client.broadcast.emit('new-user',{id: client.id, username: client.username,free: client.free,loginAt: client.loginAt})
+  client.broadcast.emit('new-user', { id: client.id, username: client.username, free: client.free, loginAt: client.loginAt })
 })
 
 

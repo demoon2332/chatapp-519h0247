@@ -3,7 +3,7 @@ https://chatapp-519h0247.herokuapp.com/
 Link Github of Project:
 https://github.com/demoon2332/chatapp-519h0247
 
-Any More information or Question: contact via gmail: ductrong1313@gmail.com/ 519h0247@student.tdtu.edu.vn
+Any More information or questions: contact via gmail: ductrong1313@gmail.com/ 519h0247@student.tdtu.edu.vn
 
 ---------------------------Content-----------------------------------------------------------------------
 *In this project, we only use Google Account via Google Authentication, 
@@ -19,7 +19,7 @@ Step2:
 - In file .env , the default port for website is 8085 (recommended)
 - You can change port to :
 + 3000 , 8000 , 8080 , 8085 , 8086 , 8087 , 45720
-( Because these port are register Google API Services already for callback URI)
+( Because these ports are register Google API Services already for callback URI)
 Step3:
 - install packages required in the project:
 + express, express-handlebars, express-session and sub-package of express

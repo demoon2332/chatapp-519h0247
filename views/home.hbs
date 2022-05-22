@@ -319,7 +319,7 @@ html{
           </div>
           <div id="conversation" class="conversation">
               <div class="d-flex content-justify-center flex-column" style="height: 100%;width: 100%">
-                <div style="flex-grow: 1"><img style="display:block;margin:auto;" src="/images/empty_message.png"></div>
+                <div style=""><img style="display:block;margin:auto;" src="/images/empty_message.png"></div>
                 <h4 style="text-align:center">Please select a conversation</h4>
               </div>
 
@@ -393,7 +393,7 @@ html{
     socket.on('list-messages',handleRetrieveMessage)
     socket.on('typing',handleTyping)
     socket.on('send-message',handleGetMessage)
-    socket.on('image',handleImage)
+    //socket.on('image',handleImage)
   }
 
   function handleImage(buffer){

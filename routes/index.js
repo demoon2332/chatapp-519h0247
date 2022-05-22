@@ -27,7 +27,10 @@ router.get('/logout',(req,res)=>{
 
 
 router.get('/chat',(req,res)=>{
-  res.render('chat')
+  if(req.user)
+    res.render('chat')
+  else
+    res.redirect('/login')
 })
 
 
